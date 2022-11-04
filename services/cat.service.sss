@@ -1,0 +1,22 @@
+import { fetchWrapper } from "helpers";
+import { FaEquals } from "react-icons/fa";
+
+const baseUrl = `http://localhost:9080/api`;
+
+
+export function getAllCats() {
+      return fetchWrapper.get(`${baseUrl}/categories/`)
+}
+
+interface Cat {
+      "title_fa": string,
+      "title_en": String,
+      "code": String,
+      "parents": String[],
+      "image": any
+}
+
+export function addCat(newcat: Cat) :Promise<Response>{
+      return fetchWrapper.post(`${baseUrl}/categories/`,newcat)
+
+}
