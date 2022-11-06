@@ -1,8 +1,43 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 
-export default function Home() {
+
+
+
+
+export async function getStaticPaths() {
+  console.log('[Next.js] Running getStaticPaths for issue page');
+  return {
+    paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params }) {
+
+
+  let issue = params.id + Math.random()
+  let comments = []
+  for (let index = 0; index < issue.length; index++) {
+    const element = Math.random();
+    comments.push(element)
+  }
+
+
+
+  return {
+    props: {
+      issue,
+      comments,
+      ct: new Date().toLocaleString("fa-IR"),
+    },
+  };
+}
+
+export default function Blog({ issue, comments, ct }) {
+
+
   return (
     <div data-theme="halloween" className={styles.container}>
       <Head>
@@ -11,13 +46,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-3xl md:mr-64 font-bold underline">
-      Hello world!
-    </h1>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome  {issue} to <a href="https://nextjs.org">Next.js!</a>
+
+          {JSON.stringify(comments)}
+
 
         </h1>
         <button className="btn">Hello daisyUI</button>
@@ -59,39 +94,8 @@ export default function Home() {
           </a>
 
           <div className="divider"></div>
+          Create Time {ct}
 
-
-          <div className="flex flex-col w-full">
-
-          <div className="card w-96 bg-base-100 shadow-xl">
-            <figure className="px-10 pt-10">
-              <img src="https://placeimg.com/400/225/arch" alt="Shoes" className="rounded-xl" />
-            </figure>
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Shoes!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          <div className="card d-flex w-96 bg-base-100 shadow-xl">
-            <figure className="px-10 pt-10">
-              <img src="https://placeimg.com/400/225/arch" alt="Shoes" className="rounded-xl" />
-            </figure>
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">Shoes!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          
-          
-                     <div className="divider"></div>
-            <div className="grid h-20 card bg-base-300 rounded-box place-items-center">content</div>
-          </div>
 
         </div>
       </main>
